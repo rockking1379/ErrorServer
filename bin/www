@@ -8,6 +8,8 @@ var app = require('../app');
 var debug = require('debug')('ErrorServer:server');
 var http = require('http');
 
+process.env.PORT = 65000;
+
 /**
  * Get port from environment and store in Express.
  */
