@@ -6,6 +6,11 @@ var fs = require('fs');
 var ERROR_CREATE = 'CREATE TABLE IF NOT EXISTS Error(error_id INTEGER NOT NULL,error_time DATE NOT NULL, error_message VARCHAR(100) NOT NULL,error_stacktrace TEXT NOT NULL)';
 var EVENT_CREATE = 'CREATE TABLE IF NOT EXISTS Event(event_id INTEGER NOT NULL, event_time DATE NOT NULL, event_message VARCHAR(100) NOT NULL, event_user_name VARCHAR(100) NOT NULL)';
 
+router.get('/', function(req, res){
+  res.status(200);
+  res.send('this worked');
+});
+
 router.post('/', function(req, res) {
   //default to HTTP OK
   res.status(200);
