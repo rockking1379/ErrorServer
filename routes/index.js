@@ -8,7 +8,7 @@ var EVENT_CREATE = 'CREATE TABLE IF NOT EXISTS Event(event_id INTEGER NOT NULL, 
 
 router.get('/', function(req, res){
   res.status(200);
-  res.send('this worked');
+  res.send('this worked again!');
 });
 
 router.post('/', function(req, res) {
