@@ -13,9 +13,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'});
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
+app.use(logger(':remote-addr [:date[web]] :method :url HTTP/:http-version :status :response-time ms - :res[content-length]', {stream: accessLogStream}));
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb', extended: true }));
 app.use(cookieParser());
