@@ -3,25 +3,64 @@
 /**
  * Module dependencies.
  */
-
+var DEFAULT_CONF = {
+  HTTP_ENABLE:true,
+  HTTP_PORT:65000,
+  SSL_KEY:'<key here>',
+  SSL_CERT:'<cert here>',
+  CA_CERT:'<certAuth cert here>'
+};
 var app = require('../app');
+var fs = require('fs');
+var os = require('os');
 var debug = require('debug')('ErrorServer:server');
+var https = require('https');
 var http = require('http');
+var config;
 
-process.env.PORT = 65000;
+try
+{
+  config = require('../config.json');
+}
+catch(e)
+{
+  console.log("No Config Found!\nWriting Default One!");
+  fs.writeFileSync("../config.json", JSON.stringify(DEFAULT_CONF));
+  console.log("Please Edit this Config");
+}
+
+var privateKey;
+var certificate;
+var certAuth;
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(config.HTTP_PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server;
+
+if(config.HTTP_ENABLE)
+{
+  server = http.createServer(app);
+}
+else
+{
+  privateKey = fs.readFileSync(config.SSL_KEY);
+  certificate = fs.readFileSync(config.SSL_CERT);
+  certAuth = fs.readFileSync(config.CA_CERT);
+  server = https.createServer({
+    key:privateKey,
+    cert:certificate,
+    ca:certAuth
+  }, app);
+}
 
 /**
  * Listen on provided port, on all network interfaces.

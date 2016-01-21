@@ -37,3 +37,4 @@ uploads/
 # start scripts
 *.sh
 *.bat
+config.json
