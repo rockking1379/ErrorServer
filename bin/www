@@ -20,12 +20,12 @@ var config;
 
 try
 {
-  config = require('../config.json');
+  config = require('./config.json');
 }
 catch(e)
 {
   console.log("No Config Found!\nWriting Default One!");
-  fs.writeFileSync("../config.json", JSON.stringify(DEFAULT_CONF));
+  fs.writeFileSync("./config.json", JSON.stringify(DEFAULT_CONF));
   console.log("Please Edit this Config");
 }
 
