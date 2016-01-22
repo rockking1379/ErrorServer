@@ -18,15 +18,18 @@ var https = require('https');
 var http = require('http');
 var config;
 
-try
+
+if(fs.existsSync('./config.json'))
 {
-  config = require('./config.json');
+  var confFile = fs.readFileSync('./config.json');
+  config = JSON.parse(confFile);
 }
-catch(e)
+else
 {
   console.log("No Config Found!\nWriting Default One!");
   fs.writeFileSync("./config.json", JSON.stringify(DEFAULT_CONF));
   console.log("Please Edit this Config");
+  process.exit();
 }
 
 var privateKey;
